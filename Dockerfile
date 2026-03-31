@@ -17,5 +17,5 @@ COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# Use shell form so ${SPRING_PROFILE:-prod} is expanded by sh at runtime
-ENTRYPOINT ["sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=${SPRING_PROFILE:-prod} -jar app.jar"]
+# Use shell form and restrict JVM memory to fit in Render's 512MB free tier
+ENTRYPOINT ["sh", "-c", "java -XX:MaxRAMPercentage=75.0 -XX:+UseSerialGC -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=${SPRING_PROFILE:-prod} -jar app.jar"]
