@@ -17,7 +17,5 @@ COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", \
-  "-Djava.security.egd=file:/dev/./urandom", \
-  "-Dspring.profiles.active=${SPRING_PROFILE:prod}", \
-  "-jar", "app.jar"]
+# Use shell form so ${SPRING_PROFILE:-prod} is expanded by sh at runtime
+ENTRYPOINT ["sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=${SPRING_PROFILE:-prod} -jar app.jar"]
