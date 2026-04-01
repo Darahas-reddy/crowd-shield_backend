@@ -16,7 +16,7 @@ public class EvacuationController {
     private final EvacuationService evacuationService;
 
     @PostMapping("/activate")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Map<String, Object>> activate(
             @RequestBody(required = false) Map<String, String> body) {
         String reason = (body != null)
@@ -26,7 +26,7 @@ public class EvacuationController {
     }
 
     @PostMapping("/clear")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Map<String, Object>> clear() {
         return ResponseEntity.ok(evacuationService.clear());
     }

@@ -53,7 +53,7 @@ public class IncidentController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteIncident(@PathVariable String id) {
         incidentService.deleteIncident(id);

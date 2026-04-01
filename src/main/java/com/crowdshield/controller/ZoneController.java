@@ -41,14 +41,14 @@ public class ZoneController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.CREATED)
     public ZoneResponse createZone(@Valid @RequestBody ZoneRequest req) {
         return ZoneResponse.from(zoneService.createZone(toModel(req)));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ZoneResponse updateZone(@PathVariable String id, @Valid @RequestBody ZoneRequest req) {
         return ZoneResponse.from(zoneService.updateZone(id, toModel(req)));
     }
@@ -64,19 +64,19 @@ public class ZoneController {
     }
 
     @PatchMapping("/{id}/evacuate")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ZoneResponse evacuate(@PathVariable String id) {
         return ZoneResponse.from(zoneService.evacuateZone(id));
     }
 
     @PatchMapping("/{id}/cancel-evacuate")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ZoneResponse cancelEvacuate(@PathVariable String id) {
         return ZoneResponse.from(zoneService.cancelEvacuation(id));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteZone(@PathVariable String id) {
         zoneService.deleteZone(id);

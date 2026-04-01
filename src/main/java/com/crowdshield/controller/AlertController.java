@@ -46,7 +46,7 @@ public class AlertController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Void> deleteAlert(@PathVariable String id) {
         alertService.deleteAlert(id);
         return ResponseEntity.noContent().build();
